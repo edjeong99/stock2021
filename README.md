@@ -1,8 +1,12 @@
 
 This is a personal project for Edward Jeong
+This project is to improve my React skills
 
-The project's idea and some codes comes from
-https://www.freecodecamp.org/news/how-to-build-a-movie-search-app-using-react-hooks-24eb72ddfaf7/
+Funtionality
+- fetch stock info from an API
+- display stock info
+- add/remove stock to the list of stock to display
+- implement PWA?
 
 
 

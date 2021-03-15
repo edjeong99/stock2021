@@ -1,38 +1,48 @@
 
 import React, { useState, useEffect } from "react";
 import Header from "./Header"
-import Movie from "./Movie"
+import Stock from "./Stock"
 import Search from "./Search"
 import '../css/App.css';
 
 
-const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=4a3b711b"; // you should replace this with yours
-
+const QUOTE_API_URL = "https://finnhub.io/api/v1/quote?symbol="
+const API_TOKEN = "&token=c17tckv48v6reqlb2f90"; 
+const PROFILE_API_URL = "https://finnhub.io/api/v1/stock/profile2?symbol=";
+const STOCK_LIST = ["AMZN", "TRIP","AAPL"]
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
+  const [stockList, setStockList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    fetch(MOVIE_API_URL)
+    STOCK_LIST.map((symbol) => {
+      console.log("symbol = " + symbol);
+    fetch(QUOTE_API_URL+`${symbol}`+API_TOKEN)
+      // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
     .then(response => response.json())
     .then(jsonResponse => {
-      setMovies(jsonResponse.Search);
+      console.log( jsonResponse);
+      console.log( stockList);
+      setStockList([...stockList, jsonResponse]);
       setLoading(false);
+      console.log( stockList);
     })
+  });
+  console.log(stockList);
   },[]);
 
   const search = searchValue => {
     setLoading(true);
     setErrorMessage(null);
 
-    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
+    fetch(``)
     .then(response => response.json())
     .then(jsonResponse => {
       if(jsonResponse.Response === "True"){
-      setMovies(jsonResponse.Search);
-      setLoading(false);
+        setStockList(jsonResponse.Search);
+        setLoading(false);
       }
       else{
         setErrorMessage(jsonResponse.Error);
@@ -43,17 +53,18 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header text="Movies" />
+      <Header text="Stocks" />
       <Search search = {search} />
       <p className="App-intro"> Sharing a few movies</p>
-      <div className = "movies">
+      <div className = "stocks">
         {loading && !errorMessage ? 
         (<span> Loading...</span>) 
         : errorMessage ? (
           <div className="errorMessage">{errorMessage}</div>
-        ): (
-          movies.map((movie, index) => (
-            <Movie key = {`${index}-${movie.Title}`} movie = {movie} />
+        ): 
+        (
+          stockList.map((stock, index) => (
+            <Stock  stock = {stock} />
           ))
         
         )

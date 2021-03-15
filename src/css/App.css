@@ -51,20 +51,20 @@
 }
 
 
-.movies {
+.stocks {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
 
 
-.add-movies button {
+.add-stock button {
   font-size: 16px;
   padding: 8px;
   margin: 0 10px 30px 10px;
 }
 
-.movie {
+.stock {
   padding: 5px 25px 10px 25px;
   max-width: 25%;
 }
