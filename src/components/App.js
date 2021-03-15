@@ -19,13 +19,13 @@ const App = () => {
   useEffect(() => {
     STOCK_LIST.map((symbol) => {
       console.log("symbol = " + symbol);
-    fetch(QUOTE_API_URL+`${symbol}`+API_TOKEN)
+    fetch(QUOTE_API_URL+symbol+API_TOKEN)
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
     .then(response => response.json())
     .then(jsonResponse => {
       console.log( jsonResponse);
       console.log( stockList);
-      setStockList([...stockList, jsonResponse]);
+      setStockList(stockList => [...stockList, jsonResponse]);
       setLoading(false);
       console.log( stockList);
     })
@@ -55,7 +55,7 @@ const App = () => {
     <div className="App">
       <Header text="Stocks" />
       <Search search = {search} />
-      <p className="App-intro"> Sharing a few movies</p>
+      <p className="App-intro"> Current Stock Prices</p>
       <div className = "stocks">
         {loading && !errorMessage ? 
         (<span> Loading...</span>) 
@@ -64,7 +64,7 @@ const App = () => {
         ): 
         (
           stockList.map((stock, index) => (
-            <Stock  stock = {stock} />
+            <Stock key={index} stock = {stock} />
           ))
         
         )
