@@ -75,10 +75,14 @@ const App = () => {
 
 const addStock = symbol =>{
   console.log(symbol);
-  setStockList(symbol => [...stockList, symbol]);
-  setSearchResultList([]);
-}
-
+  fetch(QUOTE_API_URL+symbol+QUOTE_API_URL2+API_TOKEN)
+      // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
+    .then(response => response.json())
+    .then(jsonResponse => {
+        setStockList(stockList => [...stockList, jsonResponse]);
+        setSearchResultList([]);
+    })
+  }
     
  
   return (
