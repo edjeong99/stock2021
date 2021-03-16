@@ -2,13 +2,15 @@ import React from "react";
 
 
 
-  const DisplayResult = ({result}) => {
+  const DisplayResult = ({result, addStock}) => {
 
-
+const addThisSymbol = () => {
+  addStock(result.symbol);
+}
     return(
-      <div className = "displayResult">
+      <button className = "displayResult" onClick={addThisSymbol}>
    <h2>{result.symbol}</h2>
- </div>
+ </button>
     );
 
 

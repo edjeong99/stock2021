@@ -12,7 +12,7 @@ const QUOTE_API_URL = "https://cloud.iexapis.com/v1/stock/"
 const QUOTE_API_URL2 = "/quote";
 const API_TOKEN = "?token=pk_9d1575de6ba8426b9a036edc8cd74274"; 
 
-const STOCK_SYMBOL_LIST = ["AMZN"]; 
+let STOCK_SYMBOL_LIST = ["AMZN"]; 
 // , "TRIP","AAPL","TSLA", "WMT"];
 
 
@@ -24,13 +24,13 @@ const SEARCH_URL2 ="&token=c17tckv48v6reqlb2f90"
 
 const App = () => {
 
-  const [stockList, setStockList] = useState([]);
+  const [stockList, setStockList] = useState(STOCK_SYMBOL_LIST);
   const [searchResultList, setSearchResultList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  let resultDisplay
+
 
   useEffect(() => {
-    STOCK_SYMBOL_LIST.map((symbol) => {
+    stockList.map((symbol) => {
       console.log("symbol = " + symbol);
     fetch(QUOTE_API_URL+symbol+QUOTE_API_URL2+API_TOKEN)
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
@@ -41,6 +41,7 @@ const App = () => {
       console.log( jsonResponse);
       console.log( stockList);
       setStockList(stockList => [...stockList, jsonResponse]);
+    
  
       console.log( stockList);
      })
@@ -72,7 +73,11 @@ const App = () => {
 
   }
 
-
+const addStock = symbol =>{
+  console.log(symbol);
+  setStockList(symbol => [...stockList, symbol]);
+  setSearchResultList([]);
+}
 
     
  
@@ -83,7 +88,7 @@ const App = () => {
       <div className = "searchResult">
          
          {searchResultList.map((result, index) => 
-            <DisplayResult key = {index} result = {result} />
+            <DisplayResult key = {index} result = {result} addStock={addStock}/>
          )}
    </div>
       <p className="App-intro"> Current Stock Prices</p>
