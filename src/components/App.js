@@ -6,9 +6,10 @@ import Search from "./Search"
 import '../css/App.css';
 
 
-const QUOTE_API_URL = "https://finnhub.io/api/v1/quote?symbol="
-const API_TOKEN = "&token=c17tckv48v6reqlb2f90"; 
-const PROFILE_API_URL = "https://finnhub.io/api/v1/stock/profile2?symbol=";
+const QUOTE_API_URL = "https://cloud.iexapis.com/stable/stock/"
+const QUOTE_API_URL2 = "/quote";
+const API_TOKEN = "?token=pk_9d1575de6ba8426b9a036edc8cd74274"; 
+
 const STOCK_SYMBOL_LIST = ["AMZN", "TRIP", "AAPL","TSLA", "WMT"];
 
 const App = () => {
@@ -19,7 +20,7 @@ const App = () => {
   useEffect(() => {
     STOCK_SYMBOL_LIST.map((symbol) => {
       console.log("symbol = " + symbol);
-    fetch(PROFILE_API_URL+symbol+API_TOKEN)
+    fetch(QUOTE_API_URL+symbol+QUOTE_API_URL2+API_TOKEN)
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
     .then(response => response.json())
     .then(jsonResponse => {

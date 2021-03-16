@@ -55,6 +55,19 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  width : 90%;
+}
+
+.stockCont{
+  width : 90%;
+}
+.stock {
+ 
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 25px 10px 25px;
 }
 
 
@@ -64,10 +77,6 @@
   margin: 0 10px 30px 10px;
 }
 
-.stock {
-  padding: 5px 25px 10px 25px;
-  max-width: 25%;
-}
 
 .errorMessage {
   margin: auto;
