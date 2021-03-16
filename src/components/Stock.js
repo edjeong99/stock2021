@@ -5,11 +5,12 @@ const DEFAULT_PLACEHOLDER_IMAGE =
 
 
   const Stock = ({stock}) => {
-console.log("Stock.js");
-console.log(stock);
+// console.log("Stock.js");
+// console.log(stock);
     return(
         <div className = "stock">
-            <h2>{stock.c}</h2>
+            <h2>{stock.symbol}</h2>
+            <p>Current Price : {stock.c}</p>
             {/* <div>
                 <img width = "200" alt = {`The movie titled : ${stock.Title}`} src={poster}/>
             </div>

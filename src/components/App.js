@@ -23,6 +23,8 @@ const App = () => {
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
     .then(response => response.json())
     .then(jsonResponse => {
+    
+      jsonResponse = {symbol, ...jsonResponse};
       console.log( jsonResponse);
       console.log( stockList);
       setStockList(stockList => [...stockList, jsonResponse]);
