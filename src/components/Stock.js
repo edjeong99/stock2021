@@ -1,21 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const DEFAULT_PLACEHOLDER_IMAGE =
-  "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg";
-
+  const QUOTE_API_URL = "https://finnhub.io/api/v1/quote?symbol="
+  const API_TOKEN = "&token=c17tckv48v6reqlb2f90"; 
 
   const Stock = ({stock}) => {
 // console.log("Stock.js");
-// console.log(stock);
+
+
+
+const [loading, setLoading] = useState(true);
+  const [quote, setQuote] = useState();
+ 
+
+  useEffect(() => {
+    fetch(QUOTE_API_URL+`${stock.ticker}`+API_TOKEN)
+      .then(response => response.json())
+    .then(jsonResponse => {
+      console.log( "stock.js useEffect" + stock.ticker);
+      console.log( jsonResponse);
+  
+      setQuote(jsonResponse);
+      setLoading(false);
+      console.log( quote);
+    })
+  },{});
+
+
+
+
     return(
-        <div className = "stock">
-            <h2>{stock.symbol}</h2>
-            <p>Current Price : {stock.c}</p>
-            {/* <div>
-                <img width = "200" alt = {`The movie titled : ${stock.Title}`} src={poster}/>
-            </div>
-            <p>({stock.Year})</p> */}
-        </div>
+      <div className = "stock">
+      {!loading && quote && stock.ticker ? 
+        (        
+        <div>
+          <h2>{stock.ticker}</h2>
+          <p>Current Price : {quote.c}</p>
+          </div>
+   ) 
+        : null
+        
+      }
+ </div>
     );
 
 

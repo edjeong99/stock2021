@@ -9,7 +9,7 @@ import '../css/App.css';
 const QUOTE_API_URL = "https://finnhub.io/api/v1/quote?symbol="
 const API_TOKEN = "&token=c17tckv48v6reqlb2f90"; 
 const PROFILE_API_URL = "https://finnhub.io/api/v1/stock/profile2?symbol=";
-const STOCK_LIST = ["AMZN", "TRIP","AAPL"]
+const STOCK_SYMBOL_LIST = ["AMZN", "TRIP", "AAPL","TSLA", "WMT"];
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -17,14 +17,14 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    STOCK_LIST.map((symbol) => {
+    STOCK_SYMBOL_LIST.map((symbol) => {
       console.log("symbol = " + symbol);
-    fetch(QUOTE_API_URL+symbol+API_TOKEN)
+    fetch(PROFILE_API_URL+symbol+API_TOKEN)
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
     .then(response => response.json())
     .then(jsonResponse => {
     
-      jsonResponse = {symbol, ...jsonResponse};
+     
       console.log( jsonResponse);
       console.log( stockList);
       setStockList(stockList => [...stockList, jsonResponse]);
@@ -66,6 +66,7 @@ const App = () => {
         ): 
         (
           stockList.map((stock, index) => (
+            
             <Stock key={index} stock = {stock} />
           ))
         
