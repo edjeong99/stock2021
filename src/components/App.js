@@ -12,7 +12,7 @@ const PROFILE_API_URL = "https://finnhub.io/api/v1/stock/profile2?symbol=";
 const STOCK_SYMBOL_LIST = ["AMZN", "TRIP", "AAPL","TSLA", "WMT"];
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+
   const [stockList, setStockList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -28,7 +28,7 @@ const App = () => {
       console.log( jsonResponse);
       console.log( stockList);
       setStockList(stockList => [...stockList, jsonResponse]);
-      setLoading(false);
+ 
       console.log( stockList);
     })
   });
@@ -36,7 +36,7 @@ const App = () => {
   },[]);
 
   const search = searchValue => {
-    setLoading(true);
+
     setErrorMessage(null);
 
     fetch(``)
@@ -44,11 +44,11 @@ const App = () => {
     .then(jsonResponse => {
       if(jsonResponse.Response === "True"){
         setStockList(jsonResponse.Search);
-        setLoading(false);
+   
       }
       else{
         setErrorMessage(jsonResponse.Error);
-        setLoading(false);
+ 
       }
     })
   }
@@ -59,9 +59,8 @@ const App = () => {
       <Search search = {search} />
       <p className="App-intro"> Current Stock Prices</p>
       <div className = "stocks">
-        {loading && !errorMessage ? 
-        (<span> Loading...</span>) 
-        : errorMessage ? (
+
+        {errorMessage ? (
           <div className="errorMessage">{errorMessage}</div>
         ): 
         (

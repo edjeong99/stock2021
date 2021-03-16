@@ -10,18 +10,24 @@ import React, { useState, useEffect } from "react";
 
 const [loading, setLoading] = useState(true);
   const [quote, setQuote] = useState();
- 
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     fetch(QUOTE_API_URL+`${stock.ticker}`+API_TOKEN)
       .then(response => response.json())
     .then(jsonResponse => {
+      if(jsonResponse.c > 0){
       console.log( "stock.js useEffect" + stock.ticker);
       console.log( jsonResponse);
   
       setQuote(jsonResponse);
       setLoading(false);
       console.log( quote);
+      }
+      else{
+        setErrorMessage(jsonResponse.Error);
+ 
+      }
     })
   },{});
 
@@ -37,8 +43,9 @@ const [loading, setLoading] = useState(true);
           <p>Current Price : {quote.c}</p>
           </div>
    ) 
-        : null
-        
+        : errorMessage ? (
+          <div className="errorMessage">{errorMessage}</div>)
+       : null 
       }
  </div>
     );
