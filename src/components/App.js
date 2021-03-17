@@ -85,6 +85,12 @@ const addStock = symbol =>{
     })
   }
   
+  const deleteStock = symbol => {
+    const newStockList = stockList.filter(stock => stock.symbol !== symbol);
+    setStockList(newStockList);
+  }
+
+
   let searchResult = null;
   if(loading){
     searchResult = (<div className = "searchResultLoading"> Loading </div>)
@@ -116,7 +122,7 @@ const addStock = symbol =>{
         (
           stockList.map((stock, index) => (
             
-            <Stock key={index} stock = {stock} />
+            <Stock key={index} stock = {stock} deleteStock={deleteStock}/>
           ))
         
         )
