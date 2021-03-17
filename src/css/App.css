@@ -24,6 +24,8 @@
   color: white;
   padding: 20px;
   cursor: pointer;
+  position:fixed;left:0;top:0;
+  width:100%;
 }
 
 .App-link {
@@ -48,6 +50,12 @@
 
 .App-intro {
   font-size: large;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position:fixed;left:0;
+  top: calc(120px + 2vmin);
+  width:100%;
 }
 
 
@@ -55,11 +63,12 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width : 90%;
+  width : 100%;
+  margin-top : calc(200px + 2vmin);
 }
 
 .stockCont{
-  width : 90%;
+  width : 100%;
 }
 .stock {
  
@@ -90,9 +99,23 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 10px;
+  position:fixed;left:0;
+  top: calc(70px + 2vmin);
+  width:100%;
 }
-
+.searchResultWindow{
+  position:fixed;left:0;
+  top: calc(120px + 2vmin);
+  width:100%;
+  background-color:honeydew;
+  z-index : 100;
+}
+.searchResultWindow > button{
+  margin : 20px;
+  width : 20%;
+  min-width : 100px;
+  font-weight: bold;
+}
 .searchResult{
   display: flex;
   flex-direction: row;
@@ -101,10 +124,13 @@
   max-width : 100%;
   max-height : 300px;
   overflow: auto;
+
 }
 
 .displayResult{
   width : 20%;
+  min-width : 150px;
+  margin : 5px;
 
 }
 input[type="submit"] {

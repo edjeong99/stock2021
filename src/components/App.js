@@ -30,23 +30,9 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    stockList.map((symbol) => {
-      console.log("symbol = " + symbol);
-    fetch(QUOTE_API_URL+symbol+QUOTE_API_URL2+API_TOKEN)
-      // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
-    .then(response => response.json())
-    .then(jsonResponse => {
-    
-     
-      console.log( jsonResponse);
-      console.log( stockList);
-      setStockList(stockList => [...stockList, jsonResponse]);
-    
- 
-      console.log( stockList);
+    stockList.forEach(symbol => {
+     addStock(symbol);
      })
-  });
-  console.log(stockList);
   },[]);
 
 
@@ -74,6 +60,10 @@ const App = () => {
 
   }
 
+  const handleAdd = symbol => {
+    addStock(symbol);
+    setSearchResultList([]);
+  }
 const addStock = symbol =>{
   console.log(symbol);
   fetch(QUOTE_API_URL+symbol+QUOTE_API_URL2+API_TOKEN)
@@ -81,7 +71,7 @@ const addStock = symbol =>{
     .then(response => response.json())
     .then(jsonResponse => {
         setStockList(stockList => [...stockList, jsonResponse]);
-        setSearchResultList([]);
+        
     })
   }
   
@@ -93,42 +83,57 @@ const addStock = symbol =>{
 
   let searchResult = null;
   if(loading){
-    searchResult = (<div className = "searchResultLoading"> Loading </div>)
+    searchResult = (<div className = "searchResultWindow"><h3> Loading</h3> </div>)
   }
   else if(searchResultList.length > 0){
     searchResult =  (
-      <div className = "searchResult">
-         
+      <div className = "searchResultWindow">
+        <h3>Choose a Symbol to add to the list below</h3>
+        <div className = "searchResult">
+        
       {searchResultList.map((result, index) => 
-         <DisplayResult key = {index} result = {result} addStock={addStock}/>
+         <DisplayResult key = {index} result = {result} handleAdd={handleAdd}/>
       )}
+      
+</div>
+<button onClick={() => setSearchResultList([])}>Cancel</button>
 </div>
     )
       }
 
   
+
+let displayStocks = (<div className = "stocks">
+  {stockList.map((stock, index) => (
+    
+    <Stock key={index} stock = {stock} deleteStock={deleteStock}/>
+  ))}
+  </div>) ;
+if(errorMessage)
+displayStocks = (<div className = "stocks">
+  <div className="errorMessage">{errorMessage}</div></div>)
+
+
+const headings = (
+  <div className="App-intro"> 
+  <p></p>
+    <p>Current Prices</p>
+    <p>% change</p>
+    <p>previousClose</p>
+    <p></p>
+
+  </div>
+)
+
  
   return (
     <div className="App">
       <Header text="Stocks" />
       <Search search = {search} />
-     {searchResult}
-      <p className="App-intro"> Current Stock Prices</p>
-      <div className = "stocks">
-
-        {errorMessage ? (
-          <div className="errorMessage">{errorMessage}</div>
-        ): 
-        (
-          stockList.map((stock, index) => (
-            
-            <Stock key={index} stock = {stock} deleteStock={deleteStock}/>
-          ))
-        
-        )
+      {searchResult}
+      {headings}
+      {displayStocks}
       
-      }
-      </div>
     </div>
   );
 }

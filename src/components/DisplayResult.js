@@ -2,10 +2,10 @@ import React from "react";
 
 
 
-  const DisplayResult = ({result, addStock}) => {
+  const DisplayResult = ({result, handleAdd}) => {
 
 const addThisSymbol = () => {
-  addStock(result.symbol);
+  handleAdd(result.symbol);
 }
     return(
       <button className = "displayResult" onClick={addThisSymbol}>
