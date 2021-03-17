@@ -17,15 +17,41 @@ const SEARCH_URL2 = '&token=c17tckv48v6reqlb2f90';
 
 const App = () => {
   const [stockList, setStockList] = useState(STOCK_SYMBOL_LIST);
+  const [quoteList, setQuoteList] = useState([]);
   const [searchResultList, setSearchResultList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const id = setInterval(() => {
+      refreshStockQuote();
+    }, 10000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
+
+  const refreshStockQuote = () => {
+    setQuoteList([]);
     stockList.forEach((symbol) => {
       addStock(symbol);
     });
-  }, []);
+  };
+
+  const handleAdd = (symbol) => {
+    addStock(symbol);
+    setSearchResultList([]);
+  };
+  const addStock = (symbol) => {
+    console.log(symbol);
+    fetch(QUOTE_API_URL + symbol + QUOTE_API_URL2 + API_TOKEN)
+      // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        setStockList((stockList) => [...stockList, symbol]);
+        setQuoteList((quoteList) => [...quoteList, jsonResponse]);
+      });
+  };
 
   const search = (searchValue) => {
     setLoading(true);
@@ -46,23 +72,11 @@ const App = () => {
       });
   };
 
-  const handleAdd = (symbol) => {
-    addStock(symbol);
-    setSearchResultList([]);
-  };
-  const addStock = (symbol) => {
-    console.log(symbol);
-    fetch(QUOTE_API_URL + symbol + QUOTE_API_URL2 + API_TOKEN)
-      // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        setStockList((stockList) => [...stockList, jsonResponse]);
-      });
-  };
-
   const deleteStock = (symbol) => {
-    const newStockList = stockList.filter((stock) => stock.symbol !== symbol);
+    const newStockList = stockList.filter((stock) => stock !== symbol);
     setStockList(newStockList);
+    const newQuoteList = quoteList.filter((stock) => stock.symbol !== symbol);
+    setQuoteList(newQuoteList);
   };
 
   let searchResult = null;
@@ -88,8 +102,8 @@ const App = () => {
 
   let displayStocks = (
     <div className='stocks'>
-      {stockList.map((stock, index) => (
-        <Stock key={index} stock={stock} deleteStock={deleteStock} />
+      {quoteList.map((quote, index) => (
+        <Stock key={index} stock={quote} deleteStock={deleteStock} />
       ))}
     </div>
   );
