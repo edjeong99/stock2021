@@ -12,7 +12,7 @@ const QUOTE_API_URL = "https://cloud.iexapis.com/v1/stock/"
 const QUOTE_API_URL2 = "/quote";
 const API_TOKEN = "?token=pk_9d1575de6ba8426b9a036edc8cd74274"; 
 
-let STOCK_SYMBOL_LIST = ["AMZN"]; 
+let STOCK_SYMBOL_LIST = ["AMZN" , "TRIP","AAPL","TSLA", "WMT"]; 
 // , "TRIP","AAPL","TSLA", "WMT"];
 
 
@@ -27,7 +27,7 @@ const App = () => {
   const [stockList, setStockList] = useState(STOCK_SYMBOL_LIST);
   const [searchResultList, setSearchResultList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     stockList.map((symbol) => {
@@ -51,7 +51,7 @@ const App = () => {
 
 
   const search = searchValue => {
-  
+    setLoading(true);
     setErrorMessage(null);
     
     fetch(SEARCH_URL1+searchValue+SEARCH_URL2)
@@ -61,14 +61,15 @@ const App = () => {
       if(jsonResponse.result.length > 0){
         console.log(jsonResponse.result);
         setSearchResultList(jsonResponse.result);
+        setLoading(false);
       }
       else{
         console.log("Search error");
         setErrorMessage(jsonResponse.Error);
- 
+        setLoading(false);
       }
     })
-    .catch( console.log("Search error in catch"))
+ 
     
 
   }
@@ -83,18 +84,29 @@ const addStock = symbol =>{
         setSearchResultList([]);
     })
   }
-    
+  
+  let searchResult = null;
+  if(loading){
+    searchResult = (<div className = "searchResultLoading"> Loading </div>)
+  }
+  else if(searchResultList.length > 0){
+    searchResult =  (
+      <div className = "searchResult">
+         
+      {searchResultList.map((result, index) => 
+         <DisplayResult key = {index} result = {result} addStock={addStock}/>
+      )}
+</div>
+    )
+      }
+
+  
  
   return (
     <div className="App">
       <Header text="Stocks" />
       <Search search = {search} />
-      <div className = "searchResult">
-         
-         {searchResultList.map((result, index) => 
-            <DisplayResult key = {index} result = {result} addStock={addStock}/>
-         )}
-   </div>
+     {searchResult}
       <p className="App-intro"> Current Stock Prices</p>
       <div className = "stocks">
 
