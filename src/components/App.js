@@ -4,6 +4,7 @@ import Stock from './Stock';
 import Search from './Search';
 import DisplayResult from './DisplayResult';
 import '../css/App.css';
+
 import * as Constants from '../util/Constants';
 
 let intervalID;
