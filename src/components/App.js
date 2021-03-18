@@ -51,6 +51,8 @@ const App = () => {
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
       .then((response) => response.json())
       .then((jsonResponse) => {
+        let newQuoteList = [...quoteList, jsonResponse];
+
         setQuoteList((quoteList) => [...quoteList, jsonResponse]);
       });
   };

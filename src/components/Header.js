@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
 const Header = ({ text, update, handleUpdate }) => {
-  //const [updateState, setupdateState] = useState(update);
-
-  let refreshText,
-    buttonText = 'Start Auto Refresh';
+  const [updateText, setUpdateText] = useState();
+  const [updateButtonText, setUpdateButtonText] = useState();
 
   useEffect(() => {
     console.log('Header  update = ' + update);
-    handleRefreshText();
+    handleUpdateText();
   }, [update]);
 
-  const handleRefreshText = () => {
+  const handleUpdateText = () => {
+    console.log('Header  handleUpdateText');
     if (update) {
-      refreshText = 'Update Quote every minute';
-      buttonText = 'Stop';
+      setUpdateText('Updating every minute');
+      setUpdateButtonText('Stop');
     } else {
-      refreshText = 'Update Stopped';
-      buttonText = 'Start';
+      setUpdateText('Update Stopped');
+      setUpdateButtonText('Start');
     }
   };
 
@@ -25,8 +24,8 @@ const Header = ({ text, update, handleUpdate }) => {
     <header className='App-header'>
       <h2>{text}</h2>
       <div className='autoRefresh'>
-        <div>{refreshText}</div>
-        <button onClick={() => handleUpdate()}> {buttonText}</button>
+        <div>{updateText}</div>
+        <button onClick={() => handleUpdate()}> {updateButtonText}</button>
       </div>
     </header>
   );
