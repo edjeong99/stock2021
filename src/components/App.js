@@ -41,18 +41,17 @@ const App = () => {
     setSearchResultList([]);
   };
   const getQuotes = (symbol) => {
-    console.log(symbol);
     fetch(
       Constants.QUOTE_API_URL +
         symbol +
         Constants.QUOTE_API_URL2 +
-        Constants.API_TOKEN
+        Constants.QUOTE_API_TOKEN
     )
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
       .then((response) => response.json())
       .then((jsonResponse) => {
-        let newQuoteList = [...quoteList, jsonResponse];
-
+        //newQuoteList.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
+        // console.log(newQuoteList);
         setQuoteList((quoteList) => [...quoteList, jsonResponse]);
       });
   };
@@ -61,7 +60,7 @@ const App = () => {
     setLoading(true);
     setErrorMessage(null);
 
-    fetch(Constants.SEARCH_URL1 + searchValue + Constants.SEARCH_URL2)
+    fetch(Constants.SEARCH_URL1 + searchValue + Constants.SEARCH_API_TOKEN)
       .then((response) => response.json())
       .then((jsonResponse) => {
         if (jsonResponse.result.length > 0) {

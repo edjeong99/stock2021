@@ -5,12 +5,10 @@ const Header = ({ text, update, handleUpdate }) => {
   const [updateButtonText, setUpdateButtonText] = useState();
 
   useEffect(() => {
-    console.log('Header  update = ' + update);
     handleUpdateText();
   }, [update]);
 
   const handleUpdateText = () => {
-    console.log('Header  handleUpdateText');
     if (update) {
       setUpdateText('Updating every minute');
       setUpdateButtonText('Stop');
