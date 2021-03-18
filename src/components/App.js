@@ -4,32 +4,33 @@ import Stock from './Stock';
 import Search from './Search';
 import DisplayResult from './DisplayResult';
 import '../css/App.css';
-
-const QUOTE_API_URL = 'https://cloud.iexapis.com/v1/stock/';
-const QUOTE_API_URL2 = '/quote';
-const API_TOKEN = '?token=pk_9d1575de6ba8426b9a036edc8cd74274';
-
-let STOCK_SYMBOL_LIST = ['AMZN', 'TRIP', 'AAPL', 'TSLA', 'WMT'];
-// , "TRIP","AAPL","TSLA", "WMT"];
-
-const SEARCH_URL1 = 'https://finnhub.io/api/v1/search?q=';
-const SEARCH_URL2 = '&token=c17tckv48v6reqlb2f90';
+import * as Constants from '../util/Constants';
 
 const App = () => {
-  const [stockList, setStockList] = useState(STOCK_SYMBOL_LIST);
+  const [stockList, setStockList] = useState(Constants.STOCK_SYMBOL_LIST);
   const [quoteList, setQuoteList] = useState([]);
   const [searchResultList, setSearchResultList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [update, setUpdate] = useState(true);
+  let intervalID;
 
   useEffect(() => {
-    const id = setInterval(() => {
-      refreshStockQuote();
-    }, 10000);
-    return () => {
-      clearInterval(id);
-    };
-  }, []);
+    ManageUpdate();
+  }, [update]);
+
+  const ManageUpdate = () => {
+    console.log('manageUpdate start update = ' + update);
+    if (update) {
+      intervalID = setInterval(() => {
+        refreshStockQuote();
+        console.log('setInterval update ');
+      }, 10000);
+    } else {
+      clearInterval(intervalID);
+      console.log(' CLEARINTERVAL ');
+    }
+  };
 
   const refreshStockQuote = () => {
     setQuoteList([]);
@@ -44,7 +45,12 @@ const App = () => {
   };
   const addStock = (symbol) => {
     console.log(symbol);
-    fetch(QUOTE_API_URL + symbol + QUOTE_API_URL2 + API_TOKEN)
+    fetch(
+      Constants.QUOTE_API_URL +
+        symbol +
+        Constants.QUOTE_API_URL2 +
+        Constants.API_TOKEN
+    )
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
       .then((response) => response.json())
       .then((jsonResponse) => {
@@ -57,7 +63,7 @@ const App = () => {
     setLoading(true);
     setErrorMessage(null);
 
-    fetch(SEARCH_URL1 + searchValue + SEARCH_URL2)
+    fetch(Constants.SEARCH_URL1 + searchValue + Constants.SEARCH_URL2)
       .then((response) => response.json())
       .then((jsonResponse) => {
         if (jsonResponse.result.length > 0) {
@@ -77,6 +83,11 @@ const App = () => {
     setStockList(newStockList);
     const newQuoteList = quoteList.filter((stock) => stock.symbol !== symbol);
     setQuoteList(newQuoteList);
+  };
+
+  const handleUpdate = () => {
+    setUpdate((update) => !update);
+    console.log('update changed');
   };
 
   let searchResult = null;
@@ -126,7 +137,7 @@ const App = () => {
 
   return (
     <div className='App'>
-      <Header text='Stocks' />
+      <Header text='Stocks' update={update} handleUpdate={handleUpdate} />
       <Search search={search} />
       {searchResult}
       {headings}

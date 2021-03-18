@@ -34,6 +34,14 @@
 .App-header h2 {
   margin: 0;
 }
+
+.autoRefresh{
+  position : fixed;
+  right:0;
+  top : 0;
+font-size : 1rem;
+margin : 5px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -64,7 +72,7 @@
   flex-wrap: wrap;
   flex-direction: row;
   width : 100%;
-  margin-top : calc(200px + 2vmin);
+  margin-top : calc(180px + 2vmin);
 }
 
 .stockCont{
