@@ -6,6 +6,8 @@ import DisplayResult from './DisplayResult';
 import '../css/App.css';
 import * as Constants from '../util/Constants';
 
+let intervalID;
+
 const App = () => {
   const [stockList, setStockList] = useState(Constants.STOCK_SYMBOL_LIST);
   const [quoteList, setQuoteList] = useState([]);
@@ -13,37 +15,32 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(true);
-  let intervalID;
 
   useEffect(() => {
-    ManageUpdate();
-  }, [update]);
-
-  const ManageUpdate = () => {
-    console.log('manageUpdate start update = ' + update);
     if (update) {
       intervalID = setInterval(() => {
         refreshStockQuote();
-        console.log('setInterval update ');
+        console.log('setInterval update ' + intervalID);
       }, 10000);
     } else {
+      console.log(' CLEARINTERVAL ' + intervalID);
       clearInterval(intervalID);
-      console.log(' CLEARINTERVAL ');
     }
-  };
+  }, [update]);
 
   const refreshStockQuote = () => {
     setQuoteList([]);
     stockList.forEach((symbol) => {
-      addStock(symbol);
+      getQuotes(symbol);
     });
   };
 
   const handleAdd = (symbol) => {
-    addStock(symbol);
+    setStockList((stockList) => [...stockList, symbol]);
+    getQuotes(symbol);
     setSearchResultList([]);
   };
-  const addStock = (symbol) => {
+  const getQuotes = (symbol) => {
     console.log(symbol);
     fetch(
       Constants.QUOTE_API_URL +
@@ -54,7 +51,6 @@ const App = () => {
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
       .then((response) => response.json())
       .then((jsonResponse) => {
-        setStockList((stockList) => [...stockList, symbol]);
         setQuoteList((quoteList) => [...quoteList, jsonResponse]);
       });
   };
