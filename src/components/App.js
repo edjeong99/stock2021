@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
-import Stock from './Stock';
+import DisplayStocks from './DisplayStocks';
 import Search from './Search';
 import DisplayResult from './DisplayResult';
 import '../css/App.css';
@@ -18,10 +18,13 @@ const App = () => {
   const [update, setUpdate] = useState(true);
 
   useEffect(() => {
+    console.log('USE Effect update = ' + update);
+    refreshStockQuote();
+
     if (update) {
       intervalID = setInterval(() => {
+        console.log('setInterval update ' + stockList);
         refreshStockQuote();
-        console.log('setInterval update ' + intervalID);
       }, 10000);
     } else {
       console.log(' CLEARINTERVAL ' + intervalID);
@@ -29,18 +32,38 @@ const App = () => {
     }
   }, [update]);
 
+  //  useEffect(function() {
+  //     const id = setInterval(function log() {
+  //       console.log(`Count is: ${count}`);
+  //     }, 2000);
+  //     return function() {
+  //       clearInterval(id);
+  //     }
+  //   }, [count]);
+
   const refreshStockQuote = () => {
     setQuoteList([]);
+
     stockList.forEach((symbol) => {
       getQuotes(symbol);
     });
   };
 
   const handleAdd = (symbol) => {
+    let isUpdateTrue = update;
+    if (update) {
+      setUpdate((update) => !update);
+      console.log('handleAdd update FALSE');
+    }
     setStockList((stockList) => [...stockList, symbol]);
     getQuotes(symbol);
     setSearchResultList([]);
+    if (isUpdateTrue) {
+      setUpdate((update) => !update);
+      console.log('handleAdd update TRUE');
+    }
   };
+
   const getQuotes = (symbol) => {
     fetch(
       Constants.QUOTE_API_URL +
@@ -51,16 +74,17 @@ const App = () => {
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
       .then((response) => response.json())
       .then((jsonResponse) => {
-        //newQuoteList.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
-        // console.log(newQuoteList);
-        setQuoteList((quoteList) => [...quoteList, jsonResponse]);
+        setQuoteList((quoteList) =>
+          [...quoteList, jsonResponse].sort((a, b) =>
+            a.symbol > b.symbol ? 1 : -1
+          )
+        );
       });
   };
 
   const search = (searchValue) => {
     setLoading(true);
     setErrorMessage(null);
-
     fetch(Constants.SEARCH_URL1 + searchValue + Constants.SEARCH_API_TOKEN)
       .then((response) => response.json())
       .then((jsonResponse) => {
@@ -85,7 +109,7 @@ const App = () => {
 
   const handleUpdate = () => {
     setUpdate((update) => !update);
-    console.log('update changed');
+    console.log('update changed update = ' + update);
   };
 
   let searchResult = null;
@@ -109,20 +133,6 @@ const App = () => {
     );
   }
 
-  let displayStocks = (
-    <div className='stocks'>
-      {quoteList.map((quote, index) => (
-        <Stock key={index} stock={quote} deleteStock={deleteStock} />
-      ))}
-    </div>
-  );
-  if (errorMessage)
-    displayStocks = (
-      <div className='stocks'>
-        <div className='errorMessage'>{errorMessage}</div>
-      </div>
-    );
-
   const headings = (
     <div className='App-intro'>
       <p></p>
@@ -138,8 +148,12 @@ const App = () => {
       <Header text='Stocks' update={update} handleUpdate={handleUpdate} />
       <Search search={search} />
       {searchResult}
+
       {headings}
-      {displayStocks}
+
+      <DisplayStocks quoteList={quoteList} deleteStock={deleteStock} />
+      {stockList}
+      {update ? '  update is TRUE' : '   update is FALSE'}
     </div>
   );
 };

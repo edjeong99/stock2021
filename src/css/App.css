@@ -38,9 +38,10 @@
 .autoRefresh{
   position : fixed;
   right:0;
-  top : 0;
+  top :100px;
 font-size : 1rem;
 margin : 5px;
+z-index:200;
 }
 @keyframes App-logo-spin {
   from {
@@ -75,10 +76,10 @@ margin : 5px;
   margin-top : calc(180px + 2vmin);
 }
 
-.stockCont{
+.quoteCont{
   width : 100%;
 }
-.stock {
+.quote {
  
   display: flex;
   flex-wrap: wrap;
