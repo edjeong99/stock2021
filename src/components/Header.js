@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import TypoGraphy from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
 
 const Header = ({ text, update, handleUpdate }) => {
   const [updateText, setUpdateText] = useState();
@@ -22,7 +24,11 @@ const Header = ({ text, update, handleUpdate }) => {
   return (
     <div>
       <AppBar color='primary' position='fixed'>
-        <h2>{text}</h2>
+        <Toolbar>
+          <TypoGraphy variant='title' color='inherit'>
+            {text}
+          </TypoGraphy>
+        </Toolbar>
       </AppBar>
 
       <div className='autoRefresh'>

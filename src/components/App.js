@@ -139,8 +139,6 @@ const App = () => {
       {headings}
 
       <DisplayStocks quoteList={quoteList} deleteStock={deleteStock} />
-      {stockList}
-      {update ? '  update is TRUE' : '   update is FALSE'}
     </div>
   );
 };
