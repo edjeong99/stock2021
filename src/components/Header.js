@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
 
 const Header = ({ text, update, handleUpdate }) => {
   const [updateText, setUpdateText] = useState();
@@ -20,16 +19,13 @@ const Header = ({ text, update, handleUpdate }) => {
   };
 
   return (
-    <div>
-      <AppBar color='primary' position='fixed'>
-        <h2>{text}</h2>
-      </AppBar>
-
+    <header className='App-header'>
+      <h2>{text}</h2>
       <div className='autoRefresh'>
         <div>{updateText}</div>
         <button onClick={() => handleUpdate()}> {updateButtonText}</button>
       </div>
-    </div>
+    </header>
   );
 };
 
