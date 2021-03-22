@@ -102,7 +102,7 @@ const App = () => {
   if (loading) {
     searchResult = (
       <div className='searchResultWindow'>
-        <h3> Loading</h3>{' '}
+        <Loader />
       </div>
     );
   } else if (searchResultList.length > 0) {
@@ -131,6 +131,7 @@ const App = () => {
   // {loading ? <Loader /> : null}
   return (
     <div className='App'>
+      {loading ? <Loader /> : null}
       <Header text='Stocks' update={update} handleUpdate={handleUpdate} />
       <Search search={search} />
       {searchResult}
