@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
+import Loader from './Loader';
 import DisplayStocks from './DisplayStocks';
 import Search from './Search';
 import DisplayResult from './DisplayResult';
@@ -127,7 +128,7 @@ const App = () => {
       <p></p>
     </div>
   );
-
+  // {loading ? <Loader /> : null}
   return (
     <div className='App'>
       <Header text='Stocks' update={update} handleUpdate={handleUpdate} />

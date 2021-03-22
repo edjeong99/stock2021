@@ -57,6 +57,15 @@ z-index:200;
   margin: auto;
 }
 
+.loader{
+  height: 100vh;
+  width: 100vw;
+  z-index : 200;
+  display : flex;
+  background : grey;
+  justify-content: center;
+  align-items: center;
+}
 .App-intro {
   font-size: large;
   display: flex;
