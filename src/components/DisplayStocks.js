@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { Delete } from '@material-ui/icons';
 
 const DisplayStocks = ({ quoteList, deleteStock }) => {
   const style = {
@@ -36,7 +37,7 @@ const DisplayStocks = ({ quoteList, deleteStock }) => {
               <TableCell align={style.align}>{quote.previousClose}</TableCell>
               <TableCell align={style.align}>
                 <button onClick={() => deleteStock(quote.symbol)} type='submit'>
-                  X
+                  <Delete />
                 </button>
               </TableCell>
             </TableRow>
