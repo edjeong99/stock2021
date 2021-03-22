@@ -7,8 +7,6 @@ import '../css/App.css';
 
 import * as Constants from '../util/Constants';
 
-let intervalID;
-
 const App = () => {
   const [stockList, setStockList] = useState(Constants.STOCK_SYMBOL_LIST);
   const [quoteList, setQuoteList] = useState([]);
@@ -16,30 +14,22 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(true);
+  const [count, setCounter] = useState(0);
+
+  useEffect(() => {
+    let id = setInterval(() => {
+      setCounter((prevCount) => prevCount + 1);
+    }, 10000);
+    return function () {
+      clearInterval(id);
+    };
+  }, []);
 
   useEffect(() => {
     console.log('USE Effect update = ' + update);
-    refreshStockQuote();
 
-    if (update) {
-      intervalID = setInterval(() => {
-        console.log('setInterval update ' + stockList);
-        refreshStockQuote();
-      }, 10000);
-    } else {
-      console.log(' CLEARINTERVAL ' + intervalID);
-      clearInterval(intervalID);
-    }
-  }, [update]);
-
-  //  useEffect(function() {
-  //     const id = setInterval(function log() {
-  //       console.log(`Count is: ${count}`);
-  //     }, 2000);
-  //     return function() {
-  //       clearInterval(id);
-  //     }
-  //   }, [count]);
+    if (update) refreshStockQuote();
+  }, [count]);
 
   const refreshStockQuote = () => {
     setQuoteList([]);
@@ -50,21 +40,14 @@ const App = () => {
   };
 
   const handleAdd = (symbol) => {
-    let isUpdateTrue = update;
-    if (update) {
-      setUpdate((update) => !update);
-      console.log('handleAdd update FALSE');
-    }
     setStockList((stockList) => [...stockList, symbol]);
     getQuotes(symbol);
     setSearchResultList([]);
-    if (isUpdateTrue) {
-      setUpdate((update) => !update);
-      console.log('handleAdd update TRUE');
-    }
   };
 
   const getQuotes = (symbol) => {
+    setLoading(true);
+
     fetch(
       Constants.QUOTE_API_URL +
         symbol +
@@ -75,11 +58,14 @@ const App = () => {
       .then((response) => response.json())
       .then((jsonResponse) => {
         setQuoteList((quoteList) =>
+          // sort result alphabetically
           [...quoteList, jsonResponse].sort((a, b) =>
             a.symbol > b.symbol ? 1 : -1
           )
         );
+        setLoading(false);
       });
+    //.catch(err => setHasError(true))
   };
 
   const search = (searchValue) => {
@@ -109,7 +95,6 @@ const App = () => {
 
   const handleUpdate = () => {
     setUpdate((update) => !update);
-    console.log('update changed update = ' + update);
   };
 
   let searchResult = null;
