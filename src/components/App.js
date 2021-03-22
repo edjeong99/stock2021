@@ -119,24 +119,12 @@ const App = () => {
     );
   }
 
-  const headings = (
-    <div className='App-intro'>
-      <p></p>
-      <p>Current Prices</p>
-      <p>% change</p>
-      <p>previousClose</p>
-      <p></p>
-    </div>
-  );
-  // {loading ? <Loader /> : null}
   return (
     <div className='App'>
       {loading ? <Loader /> : null}
       <Header text='Stocks' update={update} handleUpdate={handleUpdate} />
       <Search search={search} />
       {searchResult}
-
-      {headings}
 
       <DisplayStocks quoteList={quoteList} deleteStock={deleteStock} />
     </div>

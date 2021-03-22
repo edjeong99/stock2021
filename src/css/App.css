@@ -76,7 +76,10 @@ z-index:100;
   width:100%;
 }
 
-
+.displayStocks{
+  height: '100vh';
+  margin-top : 170px;
+}
 .stocks {
   display: flex;
   flex-wrap: wrap;

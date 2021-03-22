@@ -10,40 +10,35 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 const DisplayStocks = ({ quoteList, deleteStock }) => {
-  const handleDelete = (symbol) => {
-    deleteStock(symbol);
+  const style = {
+    align: 'center',
   };
-
-  function preventDefault(event) {
-    event.preventDefault();
-  }
-
-  const useStyles = makeStyles((theme) => ({
-    seeMore: {
-      marginTop: theme.spacing(3),
-    },
-  }));
-
   return (
     <React.Fragment>
-      <Table size='small'>
+      <Table size='small' className='displayStocks'>
         <TableHead>
           <TableRow>
-            <TableCell>SYmbol</TableCell>
-            <TableCell>Current Price</TableCell>
-            <TableCell>% Change</TableCell>
-            <TableCell>Prev. Closing</TableCell>
-            <TableCell>Delete</TableCell>
+            <TableCell align={style.align}>Symbol</TableCell>
+            <TableCell align={style.align}>Current Price</TableCell>
+            <TableCell align={style.align}>% Change</TableCell>
+            <TableCell align={style.align}>Prev. Closing</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {quoteList.map((quote, index) => (
             <TableRow key={index}>
-              <TableCell>{quote.symbol}</TableCell>
-              <TableCell>{quote.latestPrice}</TableCell>
-              <TableCell>{(quote.changePercent * 100).toFixed(2)}%</TableCell>
-              <TableCell>{quote.previousClose}</TableCell>
-              <TableCell>X</TableCell>
+              <TableCell align={style.align}>{quote.symbol}</TableCell>
+              <TableCell align={style.align}>{quote.latestPrice}</TableCell>
+              <TableCell align={style.align}>
+                {(quote.changePercent * 100).toFixed(2)}%
+              </TableCell>
+              <TableCell align={style.align}>{quote.previousClose}</TableCell>
+              <TableCell align={style.align}>
+                <button onClick={() => deleteStock(quote.symbol)} type='submit'>
+                  X
+                </button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
