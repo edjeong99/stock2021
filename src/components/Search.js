@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SearchIcon from '@material-ui/icons/Search';
 
 const Search = ({ search }) => {
   const [searchValue, setSearchValue] = useState('');
@@ -16,11 +17,14 @@ const Search = ({ search }) => {
   return (
     <form className='search'>
       <input
+        className='searchInputFile'
         value={searchValue}
         onChange={handleSearchInputChange}
         type='text'
       />
-      <input onClick={callSearchFunction} type='submit' value='SEARCH' />
+      <div onClick={callSearchFunction} type='submit'>
+        <SearchIcon />
+      </div>
     </form>
   );
 };

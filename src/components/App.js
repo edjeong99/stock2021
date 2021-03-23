@@ -15,7 +15,7 @@ const App = () => {
   const [searchResultList, setSearchResultList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [update, setUpdate] = useState(false);
+  const [update, setUpdate] = useState(true);
   const [count, setCounter] = useState(0);
 
   useEffect(() => {
@@ -124,12 +124,7 @@ const App = () => {
     <div className='App'>
       <CssBaseline />
 
-      <Header
-        text='Stocks'
-        update={update}
-        handleUpdate={handleUpdate}
-        search={search}
-      />
+      <Header text='Stocks' update={update} handleUpdate={handleUpdate} />
       <Search search={search} />
       {searchResult}
 
