@@ -62,7 +62,7 @@ const App = () => {
       .then((jsonResponse) => {
         setQuoteList((quoteList) =>
           // sort result alphabetically
-          [...quoteList, jsonResponse].sort((a, b) =>
+          [...quoteList, { ...jsonResponse, new: true }].sort((a, b) =>
             a.symbol > b.symbol ? 1 : -1
           )
         );

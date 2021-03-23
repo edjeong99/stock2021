@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Delete } from '@material-ui/icons';
+import Alert from '@material-ui/lab/Alert';
 
 const DisplayStocks = ({ quoteList, deleteStock }) => {
   const style = {
@@ -19,6 +20,7 @@ const DisplayStocks = ({ quoteList, deleteStock }) => {
       <Table size='small' className='displayStocks'>
         <TableHead>
           <TableRow>
+            <TableCell align={style.align}></TableCell>
             <TableCell align={style.align}>Symbol</TableCell>
             <TableCell align={style.align}>Current Price</TableCell>
             <TableCell align={style.align}>% Change</TableCell>
@@ -28,19 +30,11 @@ const DisplayStocks = ({ quoteList, deleteStock }) => {
         </TableHead>
         <TableBody>
           {quoteList.map((quote, index) => (
-            <TableRow key={index}>
-              <TableCell align={style.align}>{quote.symbol}</TableCell>
-              <TableCell align={style.align}>{quote.latestPrice}</TableCell>
-              <TableCell align={style.align}>
-                {(quote.changePercent * 100).toFixed(2)}%
-              </TableCell>
-              <TableCell align={style.align}>{quote.previousClose}</TableCell>
-              <TableCell align={style.align}>
-                <button onClick={() => deleteStock(quote.symbol)} type='submit'>
-                  <Delete />
-                </button>
-              </TableCell>
-            </TableRow>
+            <DisplayAStock
+              key={index}
+              quote={quote}
+              deleteStock={deleteStock}
+            />
           ))}
         </TableBody>
       </Table>
