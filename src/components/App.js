@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './Header';
 import Loader from './Loader';
 import DisplayStocks from './DisplayStocks';
@@ -14,7 +15,7 @@ const App = () => {
   const [searchResultList, setSearchResultList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [update, setUpdate] = useState(true);
+  const [update, setUpdate] = useState(false);
   const [count, setCounter] = useState(0);
 
   useEffect(() => {
@@ -121,12 +122,21 @@ const App = () => {
 
   return (
     <div className='App'>
-      {loading ? <Loader /> : null}
-      <Header text='Stocks' update={update} handleUpdate={handleUpdate} />
+      <CssBaseline />
+
+      <Header
+        text='Stocks'
+        update={update}
+        handleUpdate={handleUpdate}
+        search={search}
+      />
       <Search search={search} />
       {searchResult}
 
       <DisplayStocks quoteList={quoteList} deleteStock={deleteStock} />
+      {
+        //loading ? <Loader /> : null
+      }
     </div>
   );
 };

@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  InputBase,
-  TextField,
-  Button,
-} from '@material-ui/core';
-import TypoGraphy from '@material-ui/core/TypoGraphy';
+import AppBar from '@material-ui/core/AppBar';
+import TypoGraphy from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
   title: {
     flexGrow: 1,
     display: 'none',
@@ -63,56 +60,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ text, update, handleUpdate, search }) => {
-  const [query, setQuery] = useState('');
+const Header = ({ text, update, handleUpdate }) => {
+  const [updateText, setUpdateText] = useState();
+  const [updateButtonText, setUpdateButtonText] = useState();
+
   const classes = useStyles();
 
-  const onChangeSearchTitle = (e) => {
-    console.log('onChangeSearch');
-    const searchTitle = e.target.value;
-    setQuery(searchTitle);
-  };
+  useEffect(() => {
+    handleUpdateText();
+  }, [update]);
 
-  const callSearchFunction = (e) => {
-    e.preventDefault();
-    console.log('search executed query = ' + query);
-    search(query);
-    setQuery('');
+  const handleUpdateText = () => {
+    if (update) {
+      setUpdateText('Updating every minute');
+      setUpdateButtonText('Stop');
+    } else {
+      setUpdateText('Update Stopped');
+      setUpdateButtonText('Start');
+    }
   };
 
   return (
     <div className={classes.root}>
       <AppBar color='primary' position='fixed'>
         <Toolbar>
-          <TypoGraphy className={classes.title} variant='h4'>
+          <TypoGraphy variant='title' color='inherit'>
             {text}
           </TypoGraphy>
-          <div className={classes.search} onSubmit={callSearchFunction}>
+          <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <Button
-                size='small'
-                variant='outlined'
-                className={classes.textField}
-                onClick={callSearchFunction}
-              ></Button>
               <SearchIcon />
             </div>
-            <TextField
+            <InputBase
+              placeholder='Search…'
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              label='Search by title'
-              value={query}
-              onChange={onChangeSearchTitle}
+              inputProps={{ 'aria-label': 'search' }}
             />
-            {
-              //           <InputBase placeholder='Search…' classes={{root: classes.inputRoot,input: classes.inputInput,
-              //}              }              inputProps={{ 'aria-label': 'search' }}            />
-            }
           </div>
         </Toolbar>
       </AppBar>
+
+      <div className='autoRefresh'>
+        <div>{updateText}</div>
+        <button onClick={() => handleUpdate()}> {updateButtonText}</button>
+      </div>
     </div>
   );
 };
