@@ -6,10 +6,8 @@ const Header = ({ text }) => {
   return (
     <div>
       <AppBar color='primary' position='fixed'>
-        <Toolbar>
-          <TypoGraphy className='App-header' variant='h4'>
-            {text}
-          </TypoGraphy>
+        <Toolbar className='App-header'>
+          <TypoGraphy variant='h4'>{text}</TypoGraphy>
         </Toolbar>
       </AppBar>
     </div>

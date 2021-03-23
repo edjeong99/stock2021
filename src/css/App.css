@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-width:350px;
 }
 
 .App-logo {
@@ -15,7 +16,8 @@
 
 .App-header {
  
-text-align: center;
+display : flex;
+justify-content: center;
 }
 
 .App-link {
@@ -105,14 +107,15 @@ z-index:100;
 }
 
 
-.search {
+.searchField {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   position:fixed;left:0;
   top: calc(70px + 2vmin);
   width:100%;
+  
 }
 .searchResultWindow{
   position:fixed;left:0;

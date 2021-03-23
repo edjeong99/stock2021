@@ -5,6 +5,7 @@ import Loader from './Loader';
 import DisplayStocks from './DisplayStocks';
 import Search from './Search';
 import DisplayResult from './DisplayResult';
+import AutoUpdate from './AutoUpdate';
 import '../css/App.css';
 
 import * as Constants from '../util/Constants';
@@ -124,8 +125,11 @@ const App = () => {
     <div className='App'>
       <CssBaseline />
 
-      <Header text='Stocks' update={update} handleUpdate={handleUpdate} />
-      <Search search={search} />
+      <Header text='Stocks' />
+      <div className='searchField'>
+        <Search search={search} />
+        <AutoUpdate update={update} handleUpdate={handleUpdate} />
+      </div>
       {searchResult}
 
       <DisplayStocks quoteList={quoteList} deleteStock={deleteStock} />
