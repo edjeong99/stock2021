@@ -1,13 +1,12 @@
 import React from 'react';
-import { AppBar, Toolbar } from '@material-ui/core';
-import TypoGraphy from '@material-ui/core/TypoGraphy';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 
 const Header = ({ text }) => {
   return (
     <div>
       <AppBar color='primary' position='fixed'>
         <Toolbar className='App-header'>
-          <TypoGraphy variant='h4'>{text}</TypoGraphy>
+          <Typography variant='h4'>{text}</Typography>
         </Toolbar>
       </AppBar>
     </div>
