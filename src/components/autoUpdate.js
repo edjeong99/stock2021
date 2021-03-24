@@ -25,7 +25,7 @@ const AutoUpdate = ({ update, handleUpdate }) => {
 
   const handleUpdateText = () => {
     if (update) {
-      setUpdateText('Update every 10sec');
+      setUpdateText('Update every 30sec');
       setUpdateButtonText('Stop');
     } else {
       setUpdateText('Update Stopped');

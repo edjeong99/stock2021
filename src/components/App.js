@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     let id = setInterval(() => {
       setCounter((prevCount) => prevCount + 1);
-    }, 10000);
+    }, 30000);
     return function () {
       clearInterval(id);
     };
