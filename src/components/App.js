@@ -4,10 +4,9 @@ import Header from './Header';
 import Loader from './Loader';
 import DisplayStocks from './DisplayStocks';
 import Search from './Search';
-import DisplayResult from './DisplayResult';
 import AutoUpdate from './AutoUpdate';
+import DisplayResult from './DisplayResult';
 import '../css/App.css';
-
 import * as Constants from '../util/Constants';
 
 const App = () => {
