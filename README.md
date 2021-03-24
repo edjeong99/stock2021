@@ -2,10 +2,10 @@
 This is a personal project to learn/improve my software development skills.
 It is a simple app that retrieve/display stock price in real time
 
-#Funtionality
-- fetch stock info from a public APIs
+#Functionality
+- fetch pre-defined stocks' info from a public APIs
 - display stock info
-- add/remove stock to the list of stocks to display
+- add/remove stock 
 - plan to add PWA, backend, etc
 
 #Tech Stack
@@ -13,8 +13,9 @@ It is a simple app that retrieve/display stock price in real time
 - Material UI
 
 #Deployment
-
-URL : 
+It is deployed at Netlify
+URL : https://edwardstock.netlify.app/
+Also can be deployed at AWS using amplify service
 
 # Getting Started with Create React App
 
