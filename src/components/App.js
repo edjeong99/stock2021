@@ -18,7 +18,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(true);
   const [count, setCounter] = useState(0);
-
+  const [newStock, setNewStock] = useState(null);
   useEffect(() => {
     let id = setInterval(() => {
       setCounter((prevCount) => prevCount + 1);
@@ -36,7 +36,8 @@ const App = () => {
 
   const refreshStockQuote = () => {
     setQuoteList([]);
-
+    setNewStock(null);
+    console.log('refreshqu newStock = ' + newStock);
     stockList.forEach((symbol) => {
       getQuotes(symbol);
     });
@@ -44,6 +45,7 @@ const App = () => {
 
   const handleAdd = (symbol) => {
     setStockList((stockList) => [...stockList, symbol]);
+    setNewStock(symbol);
     getQuotes(symbol);
     setSearchResultList([]);
   };
@@ -62,7 +64,7 @@ const App = () => {
       .then((jsonResponse) => {
         setQuoteList((quoteList) =>
           // sort result alphabetically
-          [...quoteList, { ...jsonResponse, new: true }].sort((a, b) =>
+          [...quoteList, { ...jsonResponse }].sort((a, b) =>
             a.symbol > b.symbol ? 1 : -1
           )
         );
@@ -132,10 +134,11 @@ const App = () => {
       </div>
       {searchResult}
 
-      <DisplayStocks quoteList={quoteList} deleteStock={deleteStock} />
-      {
-        //loading ? <Loader /> : null
-      }
+      <DisplayStocks
+        quoteList={quoteList}
+        deleteStock={deleteStock}
+        newStock={newStock}
+      />
     </div>
   );
 };
