@@ -6,8 +6,23 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+  align2: {
+    textAlign: 'center',
+    flexGrow: 2,
+  },
+  align1: {
+    textAlign: 'center',
+    flexGrow: 1,
+  },
+  spaceHolder: {
+    flexGrow: 1,
+  },
+}));
 const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
+  const classes = useStyles();
   const style = {
     align: 'center',
   };

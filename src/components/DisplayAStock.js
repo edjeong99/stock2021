@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import TableCell from '@material-ui/core/TableCell';
-
-import TableRow from '@material-ui/core/TableRow';
+import { TableCell, TableRow, Fade } from '@material-ui/core/';
 import { Delete } from '@material-ui/icons';
 import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,22 +15,23 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   spaceHolder: {
-    flexGrow: 1,
+    width: '15%',
+    paddingRight: 0,
   },
 }));
 
 const DisplayAStock = ({ quote, deleteStock, newStock }) => {
-  const [isNew, setIsNew] = useState(newStock);
+  const [isNew, setIsNew] = useState(true);
   const classes = useStyles();
   useEffect(() => {
     console.log('DisplayASto  newStock = ' + newStock + '  ' + quote.symbol);
 
     if (newStock !== quote.symbol) {
       //     console.log('newStock is not symbol');
-      setIsNew(null);
+      setIsNew(false);
     } else {
       setTimeout(() => {
-        setIsNew(null);
+        setIsNew(false);
       }, 5000);
       console.log('newStock is A symbol');
     }
@@ -42,13 +41,12 @@ const DisplayAStock = ({ quote, deleteStock, newStock }) => {
   };
   return (
     <TableRow>
-      {isNew ? (
-        <Alert severity='success' className={classes.align1}>
-          New
-        </Alert>
-      ) : (
-        <div className={classes.spaceHolder}></div>
-      )}
+      <TableCell className={classes.spaceHolder}>
+        <Fade in={isNew} timeout={{ enter: 0, exit: 1000 }}>
+          <Alert severity='success'>New</Alert>
+        </Fade>
+      </TableCell>
+
       <TableCell className={classes.align2}>{quote.symbol}</TableCell>
       <TableCell className={classes.align2}>{quote.latestPrice}</TableCell>
       <TableCell className={classes.align2}>
