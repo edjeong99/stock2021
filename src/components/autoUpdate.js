@@ -42,3 +42,4 @@ const AutoUpdate = ({ update, handleUpdate }) => {
 };
 
 export default AutoUpdate;
+// strange - file name in github has lowercase
