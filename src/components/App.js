@@ -15,10 +15,11 @@ const App = () => {
   const [searchResultList, setSearchResultList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [update, setUpdate] = useState(true);
+  const [update, setUpdate] = useState(false);
   const [count, setCounter] = useState(0);
   const [newStock, setNewStock] = useState(null);
   useEffect(() => {
+    refreshStockQuote();
     let id = setInterval(() => {
       setCounter((prevCount) => prevCount + 1);
     }, 30000);
