@@ -28,7 +28,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log('USE Effect update = ' + update);
+    // console.log('USE Effect update = ' + update);
 
     if (update) refreshStockQuote();
   }, [count]);
@@ -36,7 +36,7 @@ const App = () => {
   const refreshStockQuote = () => {
     setQuoteList([]);
     setNewStock(null);
-    console.log('refreshqu newStock = ' + newStock);
+    // console.log('refreshqu newStock = ' + newStock);
     stockList.forEach((symbol) => {
       getQuotes(symbol);
     });

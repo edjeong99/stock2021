@@ -24,8 +24,6 @@ const DisplayAStock = ({ quote, deleteStock, newStock }) => {
   const [isNew, setIsNew] = useState(true);
   const classes = useStyles();
   useEffect(() => {
-    console.log('DisplayASto  newStock = ' + newStock + '  ' + quote.symbol);
-
     if (newStock !== quote.symbol) {
       //     console.log('newStock is not symbol');
       setIsNew(false);
@@ -33,7 +31,6 @@ const DisplayAStock = ({ quote, deleteStock, newStock }) => {
       setTimeout(() => {
         setIsNew(false);
       }, 5000);
-      console.log('newStock is A symbol');
     }
   }, []);
   const handleDelete = () => {
