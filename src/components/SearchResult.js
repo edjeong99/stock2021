@@ -8,8 +8,17 @@ const SearchResult = ({
   searchResultList,
   handleSearch,
 }) => {
-  if (!searchResultList) return null;
-  if (!loading && !errorMessage) {
+  console.log('SearchResult');
+  console.log(
+    'loading = ' +
+      loading +
+      ' errorMessag = ' +
+      errorMessage +
+      'searchResultList = ' +
+      searchResultList
+  );
+
+  if (searchResultList) {
     return (
       <div className='searchResultWindow'>
         <h3>Choose a Symbol to add to the list below</h3>

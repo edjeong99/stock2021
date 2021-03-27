@@ -92,10 +92,13 @@ const App = () => {
         }
       })
       .catch((e) => {
-        setErrorMessage(e.message);
-        setLoading(false);
-        console.log('Search fetch has ERROR');
+        handleError(e.message);
       });
+  };
+  const handleError = (message) => {
+    setLoading(false);
+    setErrorMessage(message);
+    setTimeout((errorMessage) => setErrorMessage(null), 5000);
   };
 
   const deleteStock = (symbol) => {
