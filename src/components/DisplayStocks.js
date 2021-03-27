@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   spaceHolder: {
-    flexGrow: 1,
+    width: '15%',
+    paddingRight: 0,
   },
 }));
 const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
@@ -34,11 +35,11 @@ const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
       <Table size='small' className='displayStocks'>
         <TableHead>
           <TableRow>
-            <TableCell align={style.align}></TableCell>
-            <TableCell align={style.align}>Symbol</TableCell>
-            <TableCell align={style.align}>Current Price</TableCell>
-            <TableCell align={style.align}>% Change</TableCell>
-            <TableCell align={style.align}>Prev. Closing</TableCell>
+            <TableCell className={classes.spaceHolder}></TableCell>
+            <TableCell className={classes.align2}>Symbol</TableCell>
+            <TableCell className={classes.align2}>Current Price</TableCell>
+            <TableCell className={classes.align2}>% Change</TableCell>
+            <TableCell className={classes.align2}>Prev. Closing</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>

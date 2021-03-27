@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './Header';
-import Loader from './Loader';
 import DisplayStocks from './DisplayStocks';
 import Search from './Search';
 import AutoUpdate from './AutoUpdate';
-import DisplayResult from './DisplayResult';
+import SearchResult from './SearchResult';
 import '../css/App.css';
 import * as Constants from '../util/Constants';
 
 const App = () => {
   const [stockList, setStockList] = useState(Constants.STOCK_SYMBOL_LIST);
   const [quoteList, setQuoteList] = useState([]);
-  const [searchResultList, setSearchResultList] = useState([]);
+  const [searchResultList, setSearchResultList] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(true);
@@ -91,6 +90,11 @@ const App = () => {
           setErrorMessage(jsonResponse.Error);
           setLoading(false);
         }
+      })
+      .catch((e) => {
+        setErrorMessage(e.message);
+        setLoading(false);
+        console.log('Search fetch has ERROR');
       });
   };
 
@@ -105,26 +109,10 @@ const App = () => {
     setUpdate((update) => !update);
   };
 
-  let searchResult = null;
-  if (loading) {
-    searchResult = (
-      <div className='searchResultWindow'>
-        <Loader />
-      </div>
-    );
-  } else if (searchResultList.length > 0) {
-    searchResult = (
-      <div className='searchResultWindow'>
-        <h3>Choose a Symbol to add to the list below</h3>
-        <div className='searchResult'>
-          {searchResultList.map((result, index) => (
-            <DisplayResult key={index} result={result} handleAdd={handleAdd} />
-          ))}
-        </div>
-        <button onClick={() => setSearchResultList([])}>Cancel</button>
-      </div>
-    );
-  }
+  const handleSearch = (symbol) => {
+    if (symbol) handleAdd(symbol); // if user didn't clicked 'cancel', add symbol
+    setSearchResultList(null);
+  };
 
   return (
     <div className='App'>
@@ -135,7 +123,12 @@ const App = () => {
         <Search search={search} />
         <AutoUpdate update={update} handleUpdate={handleUpdate} />
       </div>
-      {searchResult}
+      <SearchResult
+        loading={loading}
+        errorMessage={errorMessage}
+        searchResultList={searchResultList}
+        handleSearch={handleSearch}
+      />
 
       <DisplayStocks
         quoteList={quoteList}
