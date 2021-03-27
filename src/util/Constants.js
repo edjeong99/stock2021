@@ -6,3 +6,4 @@ export const STOCK_SYMBOL_LIST = ['AMZN', 'TRIP', 'AAPL', 'TSLA', 'WMT'];
 export const SEARCH_URL1 = 'https://finnhub.io/api/v1/search?q=';
 export const QUOTE_API_TOKEN = '?token=pk_9d1575de6ba8426b9a036edc8cd74274';
 export const SEARCH_API_TOKEN = '&token=c17tckv48v6reqlb2f90';
+export const UPDATE_INTERVAL_SECOND = 30;

@@ -26,6 +26,9 @@ const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
   const style = {
     align: 'center',
   };
+  console.log('DisplayStocks ');
+  console.log(quoteList);
+
   return (
     <React.Fragment>
       <Table size='small' className='displayStocks'>
@@ -42,7 +45,7 @@ const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
         <TableBody>
           {quoteList.map((quote, index) => (
             <DisplayAStock
-              key={quote.symbol}
+              key={`${quote.symbol}+${index}`}
               quote={quote}
               deleteStock={deleteStock}
               newStock={newStock}

@@ -19,10 +19,9 @@ const App = () => {
   const [count, setCounter] = useState(0);
   const [newStock, setNewStock] = useState(null);
   useEffect(() => {
-    refreshStockQuote();
     let id = setInterval(() => {
       setCounter((prevCount) => prevCount + 1);
-    }, 30000);
+    }, Constants.UPDATE_INTERVAL_SECOND * 1000);
     return function () {
       clearInterval(id);
     };
@@ -35,6 +34,8 @@ const App = () => {
   }, [count]);
 
   const refreshStockQuote = () => {
+    console.log('refreshStock StockList');
+    console.log(stockList);
     setQuoteList([]);
     setNewStock(null);
     // console.log('refreshqu newStock = ' + newStock);
@@ -62,6 +63,8 @@ const App = () => {
       // `{${QUOTE_API_URL}+${symbol}+ ${API_TOKEN}}`)
       .then((response) => response.json())
       .then((jsonResponse) => {
+        console.log('getQuotes symbol ' + symbol);
+        console.log(quoteList);
         setQuoteList((quoteList) =>
           // sort result alphabetically
           [...quoteList, { ...jsonResponse }].sort((a, b) =>

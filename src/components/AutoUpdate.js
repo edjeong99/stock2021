@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
+import * as Constants from '../util/Constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +25,7 @@ const AutoUpdate = ({ update, handleUpdate }) => {
 
   const handleUpdateText = () => {
     if (update) {
-      setUpdateText('Update every 30sec');
+      setUpdateText(`Update every ${Constants.UPDATE_INTERVAL_SECOND}sec`);
       setUpdateButtonText('Stop');
     } else {
       setUpdateText('Update Stopped');
