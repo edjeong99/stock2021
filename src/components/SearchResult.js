@@ -1,8 +1,6 @@
 import React from 'react';
 import Loader from './Loader';
 import DisplaySearchResult from './DisplaySearchResult';
-import { Alert } from '@material-ui/lab';
-import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
   inputCenter: {
@@ -44,16 +42,7 @@ const SearchResult = ({
       </div>
     );
   }
-  return (
-    <div className='searchResultWindow'>
-      {loading && <Loader />}
-      {errorMessage && (
-        <Alert severity='error'>
-          <Typography align='center|right'>{errorMessage}</Typography>
-        </Alert>
-      )}
-    </div>
-  );
+  return <div className='searchResultWindow'>{loading && <Loader />}</div>;
 };
 
 export default SearchResult;

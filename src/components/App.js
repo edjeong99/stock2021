@@ -6,6 +6,7 @@ import DisplayStocks from './DisplayStocks';
 import Search from './Search';
 import AutoUpdate from './AutoUpdate';
 import SearchResult from './SearchResult';
+import DisplayErrorMessage from './DisplayErrorMessage';
 import '../css/App.css';
 import * as Constants from '../util/Constants';
 
@@ -72,6 +73,9 @@ const App = () => {
           )
         );
         setLoading(false);
+      })
+      .catch((e) => {
+        handleError(e.message);
       });
     //.catch(err => setHasError(true))
   };
@@ -133,7 +137,7 @@ const App = () => {
         searchResultList={searchResultList}
         handleSearch={handleSearch}
       />
-
+      <DisplayErrorMessage errorMessage={errorMessage} />
       <DisplayStocks
         quoteList={quoteList}
         deleteStock={deleteStock}
