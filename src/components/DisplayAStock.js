@@ -10,6 +10,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     flexGrow: 2,
   },
+  align2Color: {
+    textAlign: 'center',
+    flexGrow: 2,
+    color: 'red',
+  },
   align1: {
     textAlign: 'center',
     flexGrow: 1,
@@ -40,13 +45,16 @@ const DisplayAStock = ({ quote, deleteStock, newStock }) => {
     <TableRow>
       <TableCell className={classes.spaceHolder}>
         <Fade in={isNew} timeout={{ enter: 0, exit: 1000 }}>
-          <Alert severity='success'>New</Alert>
+          <Alert severity='success'></Alert>
         </Fade>
       </TableCell>
 
       <TableCell className={classes.align2}>{quote.symbol}</TableCell>
       <TableCell className={classes.align2}>{quote.latestPrice}</TableCell>
-      <TableCell className={classes.align2}>
+      <TableCell
+        className={classes.align2}
+        style={{ color: quote.changePercent < 0 ? 'red' : 'blue' }}
+      >
         {(quote.changePercent * 100).toFixed(2)}%
       </TableCell>
       <TableCell className={classes.align2}>{quote.previousClose}</TableCell>
