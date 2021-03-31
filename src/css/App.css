@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  min-width:350px;
+ 
 }
 
 .App-logo {
@@ -51,7 +51,7 @@ z-index:100;
 
 .loader{
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   z-index : 200;
   display : flex;
   background : grey;
@@ -164,11 +164,6 @@ input[type="submit"]:hover {
 }
 
 
-.search > input[type="text"]{
-  width: 40%;
-  min-width: 170px;
-}
-
 .searchResultLoading{
 font-weight : bold;
 margin : 30px;
@@ -176,21 +171,22 @@ width : 100%;
 
 }
 @media screen and (min-width: 694px) and (max-width: 915px) {
-  .movie {
-    max-width: 33%;
-  }
+
 }
 
-@media screen and (min-width: 652px) and (max-width: 693px) {
-  .movie {
-    max-width: 50%;
-  }
+@media screen and (min-width: 362px) and (max-width: 693px) {
+  .MuiTableCell-sizeSmall {
+    padding: 6px 10px !important;
+    font-size: 0.7rem !important;
+}
 }
 
 
-@media screen and (max-width: 651px) {
-  .movie {
-    max-width: 100%;
-    margin: auto;
+@media screen and (max-width: 361px) {
+
+
+  .MuiTableCell-sizeSmall {
+      padding: 6px 8px !important;
+      font-size: 0.6rem !important;
   }
-}
+  }

@@ -29,7 +29,7 @@ const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
   // console.log(quoteList);
 
   return (
-    <React.Fragment>
+    <div className='tableContainer' style={{ overflowX: 'auto' }}>
       <Table size='small' className='displayStocks'>
         <TableHead>
           <TableRow>
@@ -52,7 +52,7 @@ const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
           ))}
         </TableBody>
       </Table>
-    </React.Fragment>
+    </div>
   );
 };
 
