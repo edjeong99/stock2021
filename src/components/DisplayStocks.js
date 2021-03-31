@@ -18,15 +18,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   spaceHolder: {
-    width: '15%',
+    flexGrow: 1,
     paddingRight: 0,
   },
 }));
 const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
   const classes = useStyles();
-  const style = {
-    align: 'center',
-  };
+
   // console.log('DisplayStocks ');
   // console.log(quoteList);
 

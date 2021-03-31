@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   spaceHolder: {
-    width: '15%',
+    flexGrow: 1,
     paddingRight: 0,
   },
 }));
@@ -32,7 +32,7 @@ const DisplayAStock = ({ quote, deleteStock, newStock }) => {
         setIsNew(false);
       }, 5000);
     }
-  }, []);
+  });
   const handleDelete = () => {
     deleteStock(quote.symbol);
   };
