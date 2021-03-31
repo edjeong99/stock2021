@@ -15,15 +15,14 @@ const SearchResult = ({
   searchResultList,
   handleSearch,
 }) => {
-  console.log('SearchResult');
-  console.log(
-    'loading = ' +
-      loading +
-      ' errorMessag = ' +
-      errorMessage +
-      'searchResultList = ' +
-      searchResultList
-  );
+  //  console.log('SearchResult');
+  // console.log(
+  // 'loading = ' +
+  //   loading +
+  //   ' errorMessag = ' +
+  //   errorMessage +
+  //   'searchResultList = ' +
+  //   searchResultList );
 
   if (searchResultList) {
     return (

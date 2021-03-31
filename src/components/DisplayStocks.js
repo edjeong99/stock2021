@@ -27,8 +27,8 @@ const DisplayStocks = ({ quoteList, deleteStock, newStock }) => {
   const style = {
     align: 'center',
   };
-  console.log('DisplayStocks ');
-  console.log(quoteList);
+  // console.log('DisplayStocks ');
+  // console.log(quoteList);
 
   return (
     <React.Fragment>

@@ -11,17 +11,25 @@ import '../css/App.css';
 import * as Constants from '../util/Constants';
 
 const App = () => {
+  // stockList is an array of stock symbols.  It will use localstorage to keep persistant data
   const [stockList, setStockList] = useState(Constants.STOCK_SYMBOL_LIST);
+  //quoteList contains detailed info about a stock, including price
   const [quoteList, setQuoteList] = useState([]);
+  // searchResultList is result of a user search.  It has list of stock symbols that match search
   const [searchResultList, setSearchResultList] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  //update is boolean signify if user wants an auto update or not
   const [update, setUpdate] = useState(true);
-  const [count, setCounter] = useState(0);
+  // counter is used for auto update.  It trigger am update
+  const [counter, setCounter] = useState(0);
+  // newStock sets to a symbol of a newly added stock.  resets to null at update.
   const [newStock, setNewStock] = useState(null);
+
   useEffect(() => {
+    init();
     let id = setInterval(() => {
-      setCounter((prevCount) => prevCount + 1);
+      setCounter((prevCounter) => prevCounter + 1);
     }, Constants.UPDATE_INTERVAL_SECOND * 1000);
     return function () {
       clearInterval(id);
@@ -30,23 +38,40 @@ const App = () => {
 
   useEffect(() => {
     // console.log('USE Effect update = ' + update);
-
     if (update) refreshStockQuote();
-  }, [count]);
+  }, [counter]);
 
+  // init function gets value for stockList either from localStorage or initial value
+  // localStorage is used to keep persistent state for stockList (ie browser refresh)
+  const init = () => {
+    console.log('Init executed');
+    let localStorageStockList = JSON.parse(localStorage.getItem('stockList'));
+
+    if (localStorageStockList) {
+      setStockList(localStorageStockList);
+    } else {
+      setStockList(Constants.STOCK_SYMBOL_LIST);
+      localStorage.setItem(
+        'stockList',
+        JSON.stringify(Constants.STOCK_SYMBOL_LIST)
+      );
+    }
+  };
   const refreshStockQuote = () => {
     console.log('refreshStock StockList');
     console.log(stockList);
     setQuoteList([]);
     setNewStock(null);
-    // console.log('refreshqu newStock = ' + newStock);
+
     stockList.forEach((symbol) => {
       getQuotes(symbol);
     });
   };
 
   const handleAdd = (symbol) => {
+    localStorage.setItem('stockList', JSON.stringify([...stockList, symbol]));
     setStockList((stockList) => [...stockList, symbol]);
+
     setNewStock(symbol);
     getQuotes(symbol);
     setSearchResultList([]);
@@ -109,6 +134,7 @@ const App = () => {
   const deleteStock = (symbol) => {
     const newStockList = stockList.filter((stock) => stock !== symbol);
     setStockList(newStockList);
+    localStorage.setItem('stockList', JSON.stringify(newStockList));
     const newQuoteList = quoteList.filter((stock) => stock.symbol !== symbol);
     setQuoteList(newQuoteList);
   };
