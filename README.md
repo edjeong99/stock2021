@@ -1,19 +1,21 @@
+#Author : Edward Jeong (edjeong99@gmail.com)
 
-This is a personal project to learn/improve my software development skills.
-It is a simple app that retrieve/display stock price in real time
+This is a personal project to improve my software development skills.
+It is a simple app that display list of stock price in real time
 
 #Functionality
-- fetch pre-defined stocks' info from a public APIs
-- display stock info
-- add/remove stock 
-- plan to add PWA, backend, etc
+- fetch and display stock price info from an APIs
+- search and add a stock & remove a stock
+- PWA - installable as an app.  app works when network is offline
 
 #Tech Stack
 - React.js, including hooks
+- PWA using React PWA template
 - Material UI
 
+
 #Deployment
-It is deployed at Netlify
+Deployed at Netlify
 URL : https://edwardstock.netlify.app/
 Also can be deployed at AWS using amplify service
 
