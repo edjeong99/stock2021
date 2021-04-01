@@ -56,6 +56,15 @@ const App = () => {
         JSON.stringify(Constants.STOCK_SYMBOL_LIST)
       );
     }
+
+    // check network and let user know if network is online or offline
+    window.addEventListener('offline', () => {
+      // Update your UI to reflect that there's no connection.
+    });
+
+    window.addEventListener('online', () => {
+      // Update your UI to reflect that the connection is back.
+    });
   };
   const refreshStockQuote = () => {
     console.log('refreshStock StockList');
