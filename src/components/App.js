@@ -12,7 +12,8 @@ import * as Constants from '../util/Constants';
 
 const App = () => {
   // stockList is an array of stock symbols.  It will use localstorage to keep persistant data
-  const [stockList, setStockList] = useState(Constants.STOCK_SYMBOL_LIST);
+  //const [stockList, setStockList] = useState(Constants.STOCK_SYMBOL_LIST);
+  let stockList = JSON.parse(localStorage.getItem('stockList'));
   //quoteList contains detailed info about a stock, including price
   const [quoteList, setQuoteList] = useState([]);
   // searchResultList is result of a user search.  It has list of stock symbols that match search
@@ -45,16 +46,14 @@ const App = () => {
   // localStorage is used to keep persistent state for stockList (ie browser refresh)
   const init = () => {
     console.log('Init executed');
-    let localStorageStockList = JSON.parse(localStorage.getItem('stockList'));
 
-    if (localStorageStockList) {
-      setStockList(localStorageStockList);
-    } else {
-      setStockList(Constants.STOCK_SYMBOL_LIST);
+    if (!stockList) {
+      stockList = [...Constants.STOCK_SYMBOL_LIST];
       localStorage.setItem(
         'stockList',
         JSON.stringify(Constants.STOCK_SYMBOL_LIST)
       );
+      setCounter((prevCounter) => prevCounter + 1);
     }
 
     // check network and let user know if network is online or offline
@@ -79,7 +78,7 @@ const App = () => {
 
   const handleAdd = (symbol) => {
     localStorage.setItem('stockList', JSON.stringify([...stockList, symbol]));
-    setStockList((stockList) => [...stockList, symbol]);
+    stockList = [...stockList, symbol];
 
     setNewStock(symbol);
     getQuotes(symbol);
@@ -141,9 +140,9 @@ const App = () => {
   };
 
   const deleteStock = (symbol) => {
-    const newStockList = stockList.filter((stock) => stock !== symbol);
-    setStockList(newStockList);
-    localStorage.setItem('stockList', JSON.stringify(newStockList));
+    stockList = stockList.filter((stock) => stock !== symbol);
+
+    localStorage.setItem('stockList', JSON.stringify(stockList));
     const newQuoteList = quoteList.filter((stock) => stock.symbol !== symbol);
     setQuoteList(newQuoteList);
   };
